@@ -99,6 +99,7 @@ const select = {
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion() {
@@ -173,25 +174,36 @@ const select = {
           const option = param.options[optionId];
           console.log('Druga petla: ',optionId, option);
 
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+          const optionImage = thisProduct.imageWrapper.querySelector(`.${paramId}-${optionId}`);
+          console.log('Option Iamge: ', optionImage);
+
+          if(optionImage) {
+            if (optionSelected) {
+            optionImage.classList.add(classNames.menuProduct.imageVisible);
+            } else {
+            optionImage.classList.remove(classNames.menuProduct.imageVisible);
+          }
+        }
+
           // check if there is param with a name of paramId in formData and if it includes optionId
-          if(formData[paramId] && formData[paramId].includes(optionId)) {
+          if(optionSelected) {
             // check if the option is not default
             if(!option.default) {
               // add option price to price variable
               price+=option.price;
-            } else {
+              //thisProduct.images.classList.add(thisProduct.imageWrapper);
+            } 
+          } else {
               // check if the option is default
               if (option.default) {
-                price;
+                price-=option.price;
               } 
             }
-          } else {
-            if (option.default) {
-              price-=option.price;
-            }
-          }
+
+          } 
         }
-      }
+
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     }
