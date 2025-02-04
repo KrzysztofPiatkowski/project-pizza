@@ -77,6 +77,11 @@ const select = {
     defaultDeliveryFee: 20,
   },
   // CODE ADDED END
+  db: {
+    url: '//localhost:3131',
+    products: 'products',
+    orders: 'orders',
+  },
   };
 
   const templates = {
@@ -407,6 +412,11 @@ const select = {
       thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
       thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
 
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+
     }
 
     initActions(){
@@ -420,7 +430,50 @@ const select = {
       thisCart.dom.productList.addEventListener('remove', function(){
         thisCart.remove(event.detail.cartProduct);
       });
+
+      thisCart.dom.form.addEventListener('submit', function(event){
+        event.preventDefault();
+      });
+      thisCart.sendOrder();
     }
+
+    sendOrder(){
+      const thisCart = this;
+
+      const url = settings.db.url + '/' + settings.db.orders;
+
+      let payload = {};
+      payload.address = thisCart.dom.address.value;
+      payload.phone = thisCart.dom.phone.value;
+      payload.totalPrice = thisCart.totalPrice;
+      payload.subtotalPrice = thisCart.subtotalPrice;
+      payload.totalNumber = thisCart.totalNumber;
+      payload.deliveryFee = thisCart.dom.deliveryFee.innerHTML;
+      payload.products = [];
+
+      for(let prod of thisCart.products) {
+        payload.products.push(prod.getData());
+      }
+      console.log(payload);
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      };
+
+      fetch(url, options);
+
+      fetch(url, options)
+      .then(function(response){
+        return response.json();
+      }).then(function(parsedResponse){
+        console.log('parsedResponse', parsedResponse);
+      });
+    }
+
 
     add(menuProduct){
       const thisCart = this;
@@ -466,6 +519,10 @@ const select = {
       thisCart.dom.totalPrice.forEach(elem => {
         elem.innerHTML = thisCart.totalPrice;
       });
+
+      thisCart.subtotalPrice = subtotalPrice;
+      thisCart.totalNumber = totalNumber;
+
     }
 
     remove(cartProduct) {
@@ -565,6 +622,19 @@ const select = {
       });
     }
 
+    getData(){
+      const thisCartProduct = this;
+
+      return {
+        id: thisCartProduct.id,
+        amount: thisCartProduct.amount,
+        price: thisCartProduct.price,
+        priceSingle: thisCartProduct.priceSingle,
+        name: thisCartProduct.name,
+        params: thisCartProduct.params,
+      };
+    }
+
   }
 
   const app = {
@@ -574,15 +644,35 @@ const select = {
       //console.log('thisApp.data:', thisApp.data);
       
       for (let productData in thisApp.data.products) {
-        new Product(productData, thisApp.data.products[productData]);
+        //new Product(productData, thisApp.data.products[productData]);
+        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
       }
     },
 
     initData: function() {
       const thisApp = this;
 
-      thisApp.data = dataSource;
+      thisApp.data = {};
+      const url = settings.db.url + '/' + settings.db.products;
+
+      fetch(url)
+      .then(function(rawResponse){
+        return rawResponse.json();
+      })
+      .then(function(parsedResponse){
+        console.log('parsedResponse', parsedResponse);
+
+        /* save parsedResponse as thisApp.data.products */
+        thisApp.data.products = parsedResponse;
+
+        /* execute initMenu method */
+        thisApp.initMenu();
+      });
+      console.log('thisApp.data', JSON.stringify(thisApp.data));
+
     },
+
+    
 
     init: function(){
       const thisApp = this;
@@ -593,7 +683,6 @@ const select = {
       console.log('templates:', templates);
 
       thisApp.initData();
-      thisApp.initMenu();
     },
 
     initCart: function(){
