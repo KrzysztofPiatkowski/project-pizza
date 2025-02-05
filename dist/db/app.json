@@ -204,17 +204,55 @@
   ],
   "orders": [
     {
-      "address": "",
-      "phone": "",
-      "deliveryFee": "0",
-      "products": [],
+      "address": "sdsdsdsd",
+      "phone": "+48535910806",
+      "totalPrice": 47,
+      "subtotalPrice": 27,
+      "totalNumber": 3,
+      "deliveryFee": "20",
+      "products": [
+        {
+          "id": "breakfast",
+          "amount": 3,
+          "price": 27,
+          "priceSingle": 9,
+          "name": "Zia Giulia's Breakfast",
+          "params": {
+            "coffee": {
+              "label": "Coffee type",
+              "options": {
+                "latte": "Latte"
+              }
+            }
+          }
+        }
+      ],
       "id": 1
     },
     {
-      "address": "",
-      "phone": "",
+      "address": "sdsdsdsd",
+      "phone": "+48535910806",
+      "totalPrice": 0,
+      "subtotalPrice": 0,
+      "totalNumber": 0,
       "deliveryFee": "0",
-      "products": [],
+      "products": [
+        {
+          "id": "breakfast",
+          "amount": 0,
+          "price": 0,
+          "priceSingle": 9,
+          "name": "Zia Giulia's Breakfast",
+          "params": {
+            "coffee": {
+              "label": "Coffee type",
+              "options": {
+                "latte": "Latte"
+              }
+            }
+          }
+        }
+      ],
       "id": 2
     }
   ]

@@ -433,8 +433,9 @@ const select = {
 
       thisCart.dom.form.addEventListener('submit', function(event){
         event.preventDefault();
+        thisCart.sendOrder();
       });
-      thisCart.sendOrder();
+      
     }
 
     sendOrder(){
@@ -442,7 +443,7 @@ const select = {
 
       const url = settings.db.url + '/' + settings.db.orders;
 
-      let payload = {};
+      const payload = {};
       payload.address = thisCart.dom.address.value;
       payload.phone = thisCart.dom.phone.value;
       payload.totalPrice = thisCart.totalPrice;
@@ -461,17 +462,17 @@ const select = {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       };
 
       fetch(url, options);
 
-      fetch(url, options)
-      .then(function(response){
-        return response.json();
-      }).then(function(parsedResponse){
-        console.log('parsedResponse', parsedResponse);
-      });
+      // fetch(url, options)
+      // .then(function(response){
+      //   return response.json();
+      // }).then(function(parsedResponse){
+      //   console.log('parsedResponse', parsedResponse);
+      // });
     }
 
 
