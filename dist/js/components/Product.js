@@ -66,15 +66,19 @@ class Product {
     thisProduct.accordionTrigger.addEventListener('click', function(event) {  /* zmienilem clickableTrigger na thisProduct.accordionTrigger */
     /* prevent default action for event */
       event.preventDefault();
+      event.stopPropagation();
   
     /* find active product (product that has active class) */
       const activeProduct = document.querySelector(`.${classNames.menuProduct.wrapperActive}`);
       //console.log(activeProduct);
   
     /* if there is active product and it's not thisProduct.element, remove class active from it */
-      if(activeProduct && activeProduct!==thisProduct.element) {
-        activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+    if(activeProduct && activeProduct !== thisProduct.element) {
+      // Sprawdzamy, czy to rzeczywiście produkt, a nie cała strona
+      if (activeProduct.classList.contains('product')) {
+          activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
       }
+  }
   
     /* toggle active class on thisProduct.element */
       if (thisProduct.element) {
