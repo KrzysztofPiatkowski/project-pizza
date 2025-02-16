@@ -207,7 +207,7 @@
   "events": [
    {
      "id": 1,
-     "date": "2025-02-12",
+     "date": "2025-02-20",
      "hour": "12:30",
      "table": 1,
      "repeat": false,
@@ -256,7 +256,17 @@
      "starters": ["lemonWater"]
    }
  ],
- "bookings": [] 
+ "bookings": [
+   {
+      "id": 1,
+      "date": "2025-02-17",
+      "hour": "16:00",
+      "table": 1,
+      "duration": 3,
+      "ppl": 4,
+      "starter": ["water"]
+   }
+ ] 
  }
 
  
