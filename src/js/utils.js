@@ -62,11 +62,21 @@ utils.numberToHour = function(number){
   return (Math.floor(number) % 24) + ':' + (number % 1 * 60 + '').padStart(2, '0');
 };
 
-utils.hourToNumber = function(hour){
-  const parts = hour.split(':');
+utils.hourToNumber = function(hour) {
+  if (typeof hour === 'number') {
+    // Zamieniamy liczbę np. 16.5 na "16:30"
+    hour = utils.numberToHour(hour);
+  }
 
-  return parseInt(parts[0]) + parseInt(parts[1])/60;
+  if (typeof hour !== 'string') {
+    console.error('Błąd: hourToNumber oczekuje stringa w formacie HH:MM, ale dostał:', hour);
+    return NaN;
+  }
+
+  const parts = hour.split(':');
+  return parseInt(parts[0]) + parseInt(parts[1]) / 60;
 };
+
 
 utils.dateToStr = function(dateObj){
   return dateObj.toISOString().slice(0, 10);

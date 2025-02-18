@@ -15,6 +15,7 @@ class DatePicker extends BaseWidget{
 
     thisWidget.minDate = new Date();
     thisWidget.maxDate = utils.addDays(thisWidget.minDate, settings.datePicker.maxDaysInFuture);
+
     // eslint-disable-next-line no-undef
     flatpickr(thisWidget.dom.input, {
       defaultDate: thisWidget.minDate,
@@ -25,16 +26,41 @@ class DatePicker extends BaseWidget{
       },
       disable: [
         function(date) {
-          return (date.getDay() === 1);
+          return (date.getDay() === 1); // Wyłącz poniedziałki
         }
       ],
-      onChange: function(selectedDates, dateStr) {
-        thisWidget.value = dateStr;
+      onChange: (selectedDates, dateStr) => {
+        const thisWidget = this;
+      
+        //console.log(`📅 Flatpickr wybrał nową datę: ${dateStr}`);
+      
+        // 🔄 WYMUSZONA AKTUALIZACJA
+        thisWidget.value = dateStr; 
+        thisWidget.dom.input.value = dateStr; // Ręczna aktualizacja inputa Flatpickr
+        thisWidget.dom.input.dispatchEvent(new Event('change')); // Wymuszenie eventu zmiany
+      
+        //console.log(`🔄 Nowa wartość thisWidget.value: ${thisWidget.value}`);
+      
+        // 📢 Wysyłamy event 'updated'
+        thisWidget.announce();
       },
     });
   }
-  parseValue(value){
-    return value;
+
+  announce() {
+    const thisWidget = this;
+    //console.log(`📢 DatePicker: Wysłano event 'updated' z wartością: ${thisWidget.value}`);
+    const event = new Event('updated', {
+      bubbles: true
+    });
+    thisWidget.dom.input.dispatchEvent(event);
+  }
+  
+
+
+  parseValue(value) {
+    console.log(`📆 parseValue() otrzymało:`, value);
+    return String(value); // ✅ Wymuszenie konwersji na string
   }
 
   isValid(){
