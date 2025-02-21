@@ -101,3 +101,191 @@ input, select {
   }
 
 }
+
+/* Page HOME */
+
+#pages {
+
+  .boxes {
+    display: flex;
+    gap: 5px;
+    margin-top: 20px;
+  }
+
+  .box-booking {
+    background-image: url("../../images/pizza-2.jpg");
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    position: relative;
+    
+  }
+
+  .box-order {
+    width: 50%;
+    height: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    position: relative;
+    
+  }
+
+  .box-order img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .text-order {
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .text-booking {
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .subtext {
+    display: block;
+    font-size: 14px;
+    font-weight: 200;
+    text-transform: none;
+    opacity: 0;
+  }
+
+  .box-order:hover .text-order,
+  .box-booking:hover .text-booking {
+    transform: translateY(-10px);
+  }
+
+  .box-order:hover .subtext,
+  .box-booking:hover .subtext {
+    opacity: 1;
+  }
+
+  .box-hours {
+    width: 100%;
+    background-color: rgb(233, 77, 77);
+    min-height: 100px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    margin-top: 20px;
+  }
+
+  .box-hours-text {
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .box-hours-subtext {
+    font-size: 14px;
+    color: white;
+    font-weight: 200;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .review {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-top: 70px;
+    margin-bottom: 70px;
+  }
+
+  .review img {
+    height: auto;
+    border-radius: 5px;
+    flex: 1;
+    max-width: 50%;
+  }
+
+  .review .review-text {
+    flex: 1;
+    text-align: left;
+    max-width: 50%;
+  }
+
+  .review .review-text p{
+    font-size: 10px;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .gallery-icon {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 10px;
+    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+
+  .gallery-item:hover .gallery-icon{
+    opacity: 1;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 1 / 1;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+
+  .gallery-icon i {
+    color: rgb(233, 77, 77);
+    font-size: 24px;
+    top: 50%;
+  } 
+
+  .home-footer {
+    height: 100px;
+    margin-top: 20px;
+  }
+
+  .footer-instagram {
+    color: rgb(233, 77, 77);
+  }
+
+  .footer-instagram:hover {
+    color: rgb(136, 34, 34);
+  }
+
+}
