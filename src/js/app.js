@@ -1,7 +1,10 @@
+/* global Flickity */
+
 import{settings, select, classNames, templates} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 import Booking from './components/Booking.js';
+
 
 
 const app = {
@@ -12,9 +15,12 @@ const app = {
 
       thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
+      thisApp.ctaLinks = document.querySelectorAll('.box-order, .box-booking');
+
       const idFromHash = window.location.hash.replace('#/', '');
 
-      let pageMatchingHash = thisApp.pages[0].id;
+      // let pageMatchingHash = thisApp.pages[0].id;
+      let pageMatchingHash = 'home';
 
       for(let page of thisApp.pages){
         if(page.id == idFromHash){
@@ -37,6 +43,23 @@ const app = {
 
           /* change URL hash */
           window.location.hash = '#/' + id;
+        });
+      }
+
+      for(let link of thisApp.ctaLinks){
+        link.addEventListener('click', function(event){
+          const clickedElement = this;
+          event.preventDefault();
+
+          /* get page id from href attribute */
+          const id = clickedElement.getAttribute('href').replace('#', '');
+
+          /* run thisApp.activatePage with that id */
+          thisApp.activatePage(id);
+
+          /* change URL hash */
+          window.location.hash = '#/' + id;
+
         });
       }
 
@@ -118,7 +141,28 @@ const app = {
       thisApp.initData();
 
       thisApp.initBooking();
+
+      thisApp.initCarousel();
     },
+
+    
+
+    initCarousel: function(){
+      const carouselElem = document.querySelector('.js-carousel');
+      
+      if(carouselElem){
+        new Flickity(carouselElem, {
+          cellAlign: 'center',
+          contain: true,
+          wrapAround: true,
+          autoPlay: 3000,
+          pauseAutoPlayOnHover: false,
+          prevNextButtons: false,
+          pageDots: true
+        });
+      }
+    },
+    
 
     initCart: function(){
       const thisApp = this;
